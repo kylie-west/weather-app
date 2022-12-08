@@ -1,7 +1,3 @@
-export const spacing = {
-	topMargin: "150px",
-};
-
 export const clearDayTheme = {
 	primary: "#7bc0c9",
 	primaryDark: "#005263",
