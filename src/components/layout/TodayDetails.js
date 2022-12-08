@@ -1,15 +1,56 @@
 import styled from "styled-components";
+import getMoonPhase from "../../utils/getMoonPhase";
 import Card from "../Card";
 import { device } from "../../styles/breakpoints";
 
-export default function TodayDetails() {
+export default function TodayDetails({ data }) {
+	const today = data.daily[0];
+	const tomorrow = data.daily[1];
+	const tomorrowWeather = tomorrow.weather[0].description;
+	const { pop, humidity, clouds, wind_speed } = today;
+
+	const moonPhase = getMoonPhase(today.moon_phase);
+
+	const cards = [
+		{
+			header: "Precipitation",
+			icon: "wi-raindrops",
+			content: `${pop}%`,
+		},
+		{
+			header: "Humidity",
+			icon: "wi-raindrop",
+			content: `${humidity}%`,
+		},
+		{
+			header: "Cloud Cover",
+			icon: "wi-cloud",
+			content: `${clouds}%`,
+		},
+		{
+			header: "Wind",
+			icon: "wi-strong-wind",
+			content: `${wind_speed} mph`,
+		},
+		{
+			header: "Moon Phase",
+			icon: moonPhase.icon,
+			content: `${moonPhase.description}`,
+		},
+		{
+			header: "Tomorrow",
+			icon: `wi-owm-${tomorrow.weather[0].id}`,
+			content: `${tomorrowWeather}`,
+		},
+	];
+
 	return (
 		<Grid>
 			{cards.map((card) => (
 				<Card header={card.header} key={card.header}>
 					<Content>
-						<i>{card.icon}</i>
-						<p>{card.content}</p>
+						<Icon className={`wi ${card.icon}`} />
+						<span>{card.content}</span>
 					</Content>
 				</Card>
 			))}
@@ -54,35 +95,6 @@ const Content = styled.div`
 	}
 `;
 
-const cards = [
-	{
-		header: "Precipitation",
-		icon: "rain icon",
-		content: "?%",
-	},
-	{
-		header: "Humidity",
-		icon: "drop icon",
-		content: "?%",
-	},
-	{
-		header: "Cloud Cover",
-		icon: "cloud icon",
-		content: "?%",
-	},
-	{
-		header: "Wind",
-		icon: "wind icon",
-		content: "? mph",
-	},
-	{
-		header: "Moon Phase",
-		icon: "moon icon",
-		content: "???",
-	},
-	{
-		header: "Tomorrow",
-		icon: "weather icon",
-		content: "???",
-	},
-];
+const Icon = styled.i`
+	font-size: 32px;
+`;

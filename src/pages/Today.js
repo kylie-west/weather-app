@@ -4,14 +4,14 @@ import TodayDetails from "../components/layout/TodayDetails";
 import Overview from "../components/Overview";
 import { device } from "../styles/breakpoints";
 
-export default function Today() {
+export default function Today({ location, data }) {
 	return (
 		<Wrapper>
 			<Content>
 				<Card>
-					<Overview />
+					<Overview location={location} data={data} />
 				</Card>
-				<TodayDetails />
+				<TodayDetails data={data} />
 			</Content>
 		</Wrapper>
 	);
@@ -19,11 +19,10 @@ export default function Today() {
 
 const Wrapper = styled.div`
 	width: 100vw;
-	height: 100vh;
+	max-width: 100vw;
+	min-height: 100vh;
 	display: flex;
 	justify-content: center;
-	max-width: 100vw;
-	background-color: gray;
 `;
 
 const Content = styled.div`

@@ -1,19 +1,37 @@
+import { useState, useEffect } from "react";
+import styled from "styled-components";
 import Input from "./components/Input";
 import Navbar from "./components/Navbar";
 import Today from "./pages/Today";
-import GlobalStyle from "./styles/GlobalStyle";
+import { reverseGeocode } from "./utils/geocoding";
+import { getWeatherByGeolocation } from "./utils/getWeather";
 
-function App() {
+export default function App() {
+	const [data, setData] = useState();
+	const [location, setLocation] = useState();
+
+	useEffect(() => {
+		(async () => {
+			const res = await getWeatherByGeolocation();
+			setLocation(await reverseGeocode(res.lat, res.lon));
+			setData(res);
+		})();
+	}, []);
+
 	return (
-		<div className="App">
-			<GlobalStyle />
+		<Wrapper className="App">
 			<Navbar>
 				<Input />
 				<button>Today</button>
 			</Navbar>
-			<Today />
-		</div>
+			{data ? <Today location={location} data={data} /> : "Loading..."}
+		</Wrapper>
 	);
 }
 
-export default App;
+const Wrapper = styled.div`
+	width: 100vw;
+	max-width: 100vw;
+	min-height: 100vh;
+	background-color: gray;
+`;
