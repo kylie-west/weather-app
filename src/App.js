@@ -4,12 +4,14 @@ import themes from "./styles/themes";
 import Input from "./components/Input";
 import Navbar from "./components/Navbar";
 import Today from "./pages/Today";
-import { getWeatherByGeolocation } from "./utils/getWeather";
+import { getWeatherByGeolocation, getWeatherType } from "./utils/getWeather";
 
 export default function App() {
 	const [data, setData] = useState();
 	const [location, setLocation] = useState();
-	const [theme, setTheme] = useState(themes.clearDayTheme);
+	const [weather, setWeather] = useState("clear");
+	const [isNight, setIsNight] = useState(false);
+	const [theme, setTheme] = useState(themes.clearDay);
 
 	useEffect(() => {
 		(async () => {
@@ -19,9 +21,30 @@ export default function App() {
 		})();
 	}, []);
 
+	useEffect(() => {
+		if (data) {
+			const now = data.current.dt;
+			const sunset = data.current.sunset;
+
+			if (now - sunset > 0) setIsNight(true);
+
+			setWeather(getWeatherType(data));
+		}
+	}, [data]);
+
+	useEffect(() => {
+		if (weather === "clear" && isNight) {
+			setTheme(themes.clearNight);
+		} else if (weather === "clear") {
+			setTheme(themes.clearDay);
+		} else {
+			setTheme(themes[weather]);
+		}
+	}, [weather, isNight]);
+
 	return (
 		<ThemeProvider theme={theme}>
-			<Wrapper className="App">
+			<Wrapper theme={theme} className="App">
 				<Navbar>
 					<Input setData={setData} setLocation={setLocation} theme={theme} />
 				</Navbar>

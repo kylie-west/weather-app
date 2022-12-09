@@ -46,3 +46,34 @@ export async function getWeatherByInput(input) {
 
 	return { data, location };
 }
+
+export function getWeatherType(data) {
+	let weather;
+	let code = data.current.weather[0].id;
+
+	switch (true) {
+		case code >= 800 && code <= 803:
+			weather = "clear";
+			break;
+		case (code >= 200 && code < 300) || code === 771 || code === 781:
+			weather = "stormy";
+			break;
+		case (code >= 300 && code < 400) || (code >= 500 && code < 600):
+			weather = "rainy";
+			break;
+		case code >= 600 && code < 700:
+			weather = "snowy";
+			break;
+		case code > 700 && code < 771:
+			weather = "hazy";
+			break;
+		case code === 803 || code === 804:
+			weather = "cloudy";
+			break;
+		default:
+			weather = "clear";
+	}
+
+	console.log("Weather type: ", weather);
+	return weather;
+}

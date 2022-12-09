@@ -1,9 +1,13 @@
 import styled from "styled-components";
+import { device } from "../styles/breakpoints";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import tz from "dayjs/plugin/timezone";
 
 export default function Overview({ location, data }) {
 	const current = data.current;
 	const today = data.daily[0];
-	const time = formatTime(current.dt);
+	const time = formatTime(current.dt, data.timezone);
 	const weather = current.weather[0];
 	const currentTemp = Math.round(current.temp);
 	const maxTemp = Math.round(today.temp.max);
@@ -28,8 +32,14 @@ const Wrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 	gap: 10px;
-	max-width: 450px;
+
+	width: 400px;
 	padding: 50px;
+
+	@media ${device.phone} {
+		min-width: 300px;
+		max-width: 85vw;
+	}
 `;
 
 const Location = styled.div`
@@ -47,22 +57,9 @@ const CurrentTemp = styled.div`
 	font-weight: 200;
 `;
 
-function formatTime(timestamp) {
-	const date = new Date(timestamp * 1000);
-	let h = date.getHours();
-	let m = date.getMinutes();
-	let session = "AM";
+function formatTime(timestamp, timezone) {
+	dayjs.extend(utc);
+	dayjs.extend(tz);
 
-	// H:MM
-	m = m < 10 ? "0" + m : m;
-
-	if (h === 0) {
-		h = 12;
-	}
-	if (h > 12) {
-		h = h - 12;
-		session = "PM";
-	}
-
-	return `${h}:${m} ${session}`;
+	return dayjs.unix(timestamp).tz(timezone).format("h:mm A");
 }

@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export default function Navbar({ children }) {
+export default function Navbar({ children, theme }) {
 	return (
-		<Nav>
+		<Nav theme={theme}>
 			<Wrapper>{children}</Wrapper>
 		</Nav>
 	);

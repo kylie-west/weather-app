@@ -62,16 +62,21 @@ const Grid = styled.div`
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-rows: 1fr 1fr;
-	justify-content: space-around;
+	justify-items: center;
+	justify-content: center;
 	gap: 30px;
 	width: fit-content;
 	height: fit-content;
 	margin-left: 80px;
 
 	@media ${device.tablet} {
+		margin: 30px auto;
+	}
+
+	@media ${device.phone} {
 		grid-template-columns: 1fr 1fr;
 		grid-template-rows: 1fr 1fr 1fr;
-		margin: 30px auto;
+		justify-content: space-between;
 	}
 `;
 
@@ -92,8 +97,8 @@ const Content = styled.div`
 	}
 
 	@media ${device.tablet} {
-		width: 120px;
-		height: 100px;
+		width: 140px;
+		height: 120px;
 	}
 `;
 
