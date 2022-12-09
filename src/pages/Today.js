@@ -4,14 +4,14 @@ import TodayDetails from "../components/layout/TodayDetails";
 import Overview from "../components/Overview";
 import { device } from "../styles/breakpoints";
 
-export default function Today({ location, data }) {
+export default function Today({ location, data, theme }) {
 	return (
 		<Wrapper>
 			<Content>
 				<Card>
 					<Overview location={location} data={data} />
 				</Card>
-				<TodayDetails data={data} />
+				<TodayDetails data={data} theme={theme} />
 			</Content>
 		</Wrapper>
 	);

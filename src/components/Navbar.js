@@ -15,7 +15,7 @@ const Nav = styled.nav`
 	width: 100vw;
 	padding: 15px;
 
-	background-color: silver;
+	background-color: ${(props) => props.theme.primaryDark};
 `;
 
 const Wrapper = styled.div`

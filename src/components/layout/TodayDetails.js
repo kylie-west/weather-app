@@ -83,6 +83,8 @@ const Content = styled.div`
 	gap: 10px;
 	width: 200px;
 	height: 180px;
+	font-family: Roboto;
+	color: ${(props) => props.theme.text};
 
 	@media ${device.laptop} {
 		width: 180px;
@@ -97,4 +99,5 @@ const Content = styled.div`
 
 const Icon = styled.i`
 	font-size: 32px;
+	color: ${(props) => props.theme.primaryDark};
 `;
