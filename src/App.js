@@ -4,9 +4,7 @@ import themes from "./styles/themes";
 import Input from "./components/Input";
 import Navbar from "./components/Navbar";
 import Today from "./pages/Today";
-import { reverseGeocode } from "./utils/geocoding";
 import { getWeatherByGeolocation } from "./utils/getWeather";
-import GpsIcon from "./components/GpsIcon";
 
 export default function App() {
 	const [data, setData] = useState();
@@ -15,9 +13,9 @@ export default function App() {
 
 	useEffect(() => {
 		(async () => {
-			const res = await getWeatherByGeolocation();
-			setLocation(await reverseGeocode(res.lat, res.lon));
-			setData(res);
+			const result = await getWeatherByGeolocation();
+			setData(result.data);
+			setLocation(result.location);
 		})();
 	}, []);
 
@@ -25,10 +23,7 @@ export default function App() {
 		<ThemeProvider theme={theme}>
 			<Wrapper className="App">
 				<Navbar>
-					<Input />
-					<button>
-						<GpsIcon color={theme.primaryDark} />
-					</button>
+					<Input setData={setData} setLocation={setLocation} theme={theme} />
 				</Navbar>
 				{data ? <Today location={location} data={data} /> : "Loading..."}
 			</Wrapper>

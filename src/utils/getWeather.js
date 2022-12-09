@@ -1,4 +1,4 @@
-import { geocode } from "./geocoding";
+import { geocode, reverseGeocode } from "./geocoding";
 
 export async function getWeatherByCoordinates(latitude, longitude) {
 	let data;
@@ -31,13 +31,18 @@ export async function getWeatherByGeolocation() {
 	const coords = await getUserCoords();
 	const { latitude, longitude } = coords;
 
-	return getWeatherByCoordinates(latitude, longitude);
+	const data = await getWeatherByCoordinates(latitude, longitude);
+	const location = await reverseGeocode(latitude, longitude);
+
+	return { data, location };
 }
 
 export async function getWeatherByInput(input) {
 	const coordinates = await geocode(input);
 	const { latitude, longitude } = coordinates;
-	const data = await getWeatherByCoordinates(latitude, longitude);
 
-	return data;
+	const data = await getWeatherByCoordinates(latitude, longitude);
+	const location = await reverseGeocode(latitude, longitude);
+
+	return { data, location };
 }

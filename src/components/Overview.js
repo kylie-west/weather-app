@@ -28,11 +28,13 @@ const Wrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 	gap: 10px;
+	max-width: 450px;
 	padding: 50px;
 `;
 
 const Location = styled.div`
 	font-size: 32px;
+	text-align: center;
 `;
 
 const Icon = styled.i`
