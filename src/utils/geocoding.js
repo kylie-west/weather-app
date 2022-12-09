@@ -3,7 +3,7 @@ import { Loader } from "@googlemaps/js-api-loader";
 // Geocoding takes a location name and returns coordinates that can be used to retrieve weather data
 export async function geocode(input) {
 	const loader = new Loader({
-		apiKey: "AIzaSyCryWLJLBpF2MRASwHWbL7PrAHMPRF3uz4",
+		apiKey: process.env.REACT_APP_GOOGLE_KEY,
 		libraries: ["places"],
 	});
 	const google = await loader.load();
@@ -44,7 +44,7 @@ export async function geocode(input) {
 // Reverse geocoding takes coordinates and returns a formatted location name
 export async function reverseGeocode(latitude, longitude) {
 	const loader = new Loader({
-		apiKey: "AIzaSyCryWLJLBpF2MRASwHWbL7PrAHMPRF3uz4",
+		apiKey: process.env.REACT_APP_GOOGLE_KEY,
 		libraries: ["places"],
 	});
 	const google = await loader.load();

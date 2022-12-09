@@ -15,7 +15,7 @@ export default function Overview({ location, data }) {
 
 	return (
 		<Wrapper>
-			<Location>{location || "Nowhere"}</Location>
+			<Location>{location}</Location>
 			<div>{weather.description}</div>
 			<Icon className={`wi wi-owm-${weather.id}`} />
 			<CurrentTemp>{`${currentTemp}° F`}</CurrentTemp>

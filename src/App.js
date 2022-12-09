@@ -26,7 +26,9 @@ export default function App() {
 			const now = data.current.dt;
 			const sunset = data.current.sunset;
 
-			if (now - sunset > 0) setIsNight(true);
+			if (now - sunset > 0) {
+				setIsNight(true);
+			} else setIsNight(false);
 
 			setWeather(getWeatherType(data));
 		}
@@ -44,7 +46,7 @@ export default function App() {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<Wrapper theme={theme} className="App">
+			<Wrapper className="App">
 				<Navbar>
 					<Input setData={setData} setLocation={setLocation} theme={theme} />
 				</Navbar>

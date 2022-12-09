@@ -5,7 +5,7 @@ export async function getWeatherByCoordinates(latitude, longitude) {
 
 	try {
 		const response = await fetch(
-			`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=imperial&exclude=hourly,minutely&appid=2a422365b138d0fd1948b2e88158b02b`
+			`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=imperial&exclude=hourly,minutely&appid=${process.env.REACT_APP_OWM_KEY}`
 		);
 		data = await response.json();
 	} catch (error) {
@@ -48,8 +48,8 @@ export async function getWeatherByInput(input) {
 }
 
 export function getWeatherType(data) {
+	const code = data.current.weather[0].id;
 	let weather;
-	let code = data.current.weather[0].id;
 
 	switch (true) {
 		case code >= 800 && code <= 803:
@@ -74,6 +74,5 @@ export function getWeatherType(data) {
 			weather = "clear";
 	}
 
-	console.log("Weather type: ", weather);
 	return weather;
 }
