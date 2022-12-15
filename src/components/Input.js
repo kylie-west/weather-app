@@ -7,7 +7,7 @@ import {
 import GpsIcon from "./GpsIcon";
 
 export default function Input({ setData, setLocation, theme }) {
-	const [value, setValue] = useState();
+	const [value, setValue] = useState("");
 
 	const handleChange = (e) => {
 		setValue(e.target.value);

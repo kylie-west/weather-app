@@ -109,6 +109,6 @@ export default function getMoonPhase(value) {
 
 	const moonPhase = { description, icon };
 
-	console.log(`It's day ${dayInCycle} in the moon cycle.`);
+	// console.log(`It's day ${dayInCycle} in the moon cycle.`);
 	return moonPhase;
 }

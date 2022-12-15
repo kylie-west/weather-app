@@ -20,7 +20,10 @@ export async function geocode(input) {
 
 			placeId = result.place_id;
 		} else {
-			console.error(status);
+			console.error(
+				"An error occurred while retrieving place predictions: ",
+				status
+			);
 		}
 	});
 
@@ -30,7 +33,7 @@ export async function geocode(input) {
 			if (status === "OK") {
 				location = results[0].geometry.location;
 			} else {
-				console.error(status);
+				console.error("An error occurred while geocoding:", status);
 			}
 		});
 
@@ -38,7 +41,11 @@ export async function geocode(input) {
 		longitude = location.lng();
 	}
 
-	return { latitude, longitude };
+	if (latitude && longitude) {
+		return { latitude, longitude };
+	} else {
+		alert("Sorry, couldn't find that location. :(");
+	}
 }
 
 // Reverse geocoding takes coordinates and returns a formatted location name
@@ -68,7 +75,6 @@ export async function reverseGeocode(latitude, longitude) {
 	);
 
 	cityName = getCityName(results);
-	console.log(cityName);
 	return cityName;
 }
 
