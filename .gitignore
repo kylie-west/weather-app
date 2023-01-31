@@ -22,3 +22,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+/src/assets/icons/font
+/src/assets/icons/css/weather-icons.css
+/src/assets/icons/css/weather-icons-wind.css
