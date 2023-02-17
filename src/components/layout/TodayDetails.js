@@ -15,7 +15,7 @@ export default function TodayDetails({ data }) {
 		{
 			header: "Precipitation",
 			icon: "wi-raindrops",
-			content: `${pop}%`,
+			content: `${pop * 100}%`,
 		},
 		{
 			header: "Humidity",
