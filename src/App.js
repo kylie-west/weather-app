@@ -23,8 +23,8 @@ export default function App() {
 
 	useEffect(() => {
 		if (data) {
-			const now = data.current.dt;
-			const sunset = data.current.sunset;
+			const now = data.dt;
+			const sunset = data.sys.sunset;
 
 			if (now - sunset > 0) {
 				setIsNight(true);

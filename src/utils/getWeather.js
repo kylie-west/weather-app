@@ -1,11 +1,18 @@
 import { geocode, reverseGeocode } from "./geocoding";
 
+async function getApiKey() {
+	const res = await fetch("/.netlify/functions/getOwmKey");
+	const { key } = await res.json();
+	return key;
+}
+
 export async function getWeatherByCoordinates(latitude, longitude) {
 	let data;
 
 	try {
+		const key = await getApiKey();
 		const response = await fetch(
-			`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=imperial&exclude=hourly,minutely&appid=${process.env.REACT_APP_OWM_KEY}`
+			`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${key}`
 		);
 		data = await response.json();
 	} catch (error) {
@@ -47,8 +54,7 @@ export async function getWeatherByInput(input) {
 	return { data, location };
 }
 
-export function getWeatherType(data) {
-	const code = data.current.weather[0].id;
+export function getWeatherType(code) {
 	let weather;
 
 	switch (true) {

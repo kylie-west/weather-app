@@ -1,12 +1,20 @@
 import { Loader } from "@googlemaps/js-api-loader";
 
+export async function loadGoogle() {
+	const res = await fetch("/.netlify/functions/getGoogleKey");
+	const { key } = await res.json();
+	const loader = new Loader({
+	  apiKey: key,
+	  libraries: ["places"],
+	  version: "weekly"
+	});
+  
+	return await loader.load();
+  }
+
 // Geocoding takes a location name and returns coordinates that can be used to retrieve weather data
 export async function geocode(input) {
-	const loader = new Loader({
-		apiKey: process.env.REACT_APP_GOOGLE_KEY,
-		libraries: ["places"],
-	});
-	const google = await loader.load();
+	const google = await loadGoogle();
 	const geocoder = new google.maps.Geocoder();
 	const service = new google.maps.places.AutocompleteService();
 
@@ -50,11 +58,7 @@ export async function geocode(input) {
 
 // Reverse geocoding takes coordinates and returns a formatted location name
 export async function reverseGeocode(latitude, longitude) {
-	const loader = new Loader({
-		apiKey: process.env.REACT_APP_GOOGLE_KEY,
-		libraries: ["places"],
-	});
-	const google = await loader.load();
+	const google = await loadGoogle();
 	const geocoder = new google.maps.Geocoder();
 
 	let results;
