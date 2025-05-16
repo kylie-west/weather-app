@@ -4,18 +4,21 @@ import Card from "../Card";
 import { device } from "../../styles/breakpoints";
 
 export default function TodayDetails({ data }) {
-	const today = data.daily[0];
-	const tomorrow = data.daily[1];
-	const tomorrowWeather = tomorrow.weather[0].description;
-	const { pop, humidity, clouds, wind_speed } = today;
+	const today = data;
+	// const tomorrow = data.daily[1];
+	// const tomorrowWeather = tomorrow.weather[0].description;
+	const clouds = today.clouds.all;
+	const humidity = today.main.humidity;
+	const rain = today.rain ? today.rain["1h"] : 0;
+	const windSpeed = today.wind.speed;
 
-	const moonPhase = getMoonPhase(today.moon_phase);
+	// const moonPhase = getMoonPhase(today.moon_phase);
 
 	const cards = [
 		{
 			header: "Precipitation",
 			icon: "wi-raindrops",
-			content: `${pop * 100}%`,
+			content: `${rain} mm/h`,
 		},
 		{
 			header: "Humidity",
@@ -30,18 +33,18 @@ export default function TodayDetails({ data }) {
 		{
 			header: "Wind",
 			icon: "wi-strong-wind",
-			content: `${wind_speed} mph`,
+			content: `${windSpeed} mph`,
 		},
-		{
-			header: "Moon Phase",
-			icon: moonPhase.icon,
-			content: `${moonPhase.description}`,
-		},
-		{
-			header: "Tomorrow",
-			icon: `wi-owm-${tomorrow.weather[0].id}`,
-			content: `${tomorrowWeather}`,
-		},
+		// {
+		// 	header: "Moon Phase",
+		// 	icon: moonPhase.icon,
+		// 	content: `${moonPhase.description}`,
+		// },
+		// {
+		// 	header: "Tomorrow",
+		// 	icon: `wi-owm-${tomorrow.weather[0].id}`,
+		// 	content: `${tomorrowWeather}`,
+		// },
 	];
 
 	return (
