@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import getMoonPhase from "../../utils/getMoonPhase";
 import Card from "../Card";
 import { device } from "../../styles/breakpoints";
 
