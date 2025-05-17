@@ -2,22 +2,18 @@ import styled from "styled-components";
 import { device } from "../styles/breakpoints";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import tz from "dayjs/plugin/timezone";
 
 export default function Overview({ location, data }) {
-	const current = data.current;
-	const today = data.daily[0];
-	const time = formatTime(current.dt, data.timezone);
-	const weather = current.weather[0];
-	const currentTemp = Math.round(current.temp);
-	const maxTemp = Math.round(today.temp.max);
-	const minTemp = Math.round(today.temp.min);
+	const time = getTime(data.timezone);
+	const currentTemp = Math.round(data.main.temp);
+	const maxTemp = Math.round(data.main.temp_max);
+	const minTemp = Math.round(data.main.temp_min);
 
 	return (
 		<Wrapper>
 			<Location>{location}</Location>
-			<div>{weather.description}</div>
-			<Icon className={`wi wi-owm-${weather.id}`} />
+			<div>{data.weather.description}</div>
+			<Icon className={`wi wi-owm-${data.weather.id}`} />
 			<CurrentTemp>{`${currentTemp}° F`}</CurrentTemp>
 			<div>
 				{`${maxTemp}°`} / {`${minTemp}°`}
@@ -57,9 +53,8 @@ const CurrentTemp = styled.div`
 	font-weight: 200;
 `;
 
-function formatTime(timestamp, timezone) {
+function getTime(offsetInSeconds) {
 	dayjs.extend(utc);
-	dayjs.extend(tz);
-
-	return dayjs.unix(timestamp).tz(timezone).format("h:mm A");
+	const offsetInMinutes = offsetInSeconds / 60;
+	return dayjs().utc().utcOffset(offsetInMinutes).format("h:mm A");
 }
